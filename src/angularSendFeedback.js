@@ -33,6 +33,7 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
                             lineJoin:               'bevel',
                             lineWidth:              3,
                             html2canvasURL:         'html2canvas.js',
+                            timeout:                30000,
                             feedbackButton:         '.feedback-btn',
                             showDescriptionModal:   true,
                             isDraggable:            true,
@@ -488,7 +489,8 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
                                             }
                                         },
                                         proxy: settings.proxy,
-                                        letterRendering: settings.letterRendering
+                                        letterRendering: settings.letterRendering,
+                                        timeout: settings.timeout
                                     });
                                 });
 
