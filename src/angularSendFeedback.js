@@ -67,6 +67,7 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
                                     });
                                 }
                                 var canDraw = false,
+                                    allowNewImg = true,
                                     img = '',
                                     h   = $(document).height(),
                                     w   = $(document).width(),
@@ -454,6 +455,7 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
 
                                 $(document).on('click', '#feedback-highlighter-next', function() {
                                     canDraw = false;
+                                    allowNewImg = true;
                                     $('#feedback-canvas').css('cursor', 'default');
                                     var sy = $(document).scrollTop(),
                                         dh = $(window).height();
@@ -464,6 +466,9 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
                                     }
                                     html2canvas($('body'), {
                                         onrendered: function(canvas) {
+                                            if (!allowNewImg) {
+                                                return
+                                            }
                                             if (!settings.screenshotStroke) {
                                                 redraw(ctx);
                                             }
@@ -487,6 +492,7 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
                                                 close();
                                                 _canvas.remove();
                                             }
+                                            allowNewImg = false;
                                         },
                                         proxy: settings.proxy,
                                         letterRendering: settings.letterRendering,

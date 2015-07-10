@@ -1,6 +1,6 @@
 /**
  * Angular feedback directive similar to Google Feedback
- * @version v1.0.2 - 2015-07-05 * @link https://github.com/jacobscarter/angular-feedback
+ * @version v1.0.2 - 2015-07-10 * @link https://github.com/jacobscarter/angular-feedback
  * @author Jacob Carter <jacob@ieksolutions.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -82,6 +82,7 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
                                     });
                                 }
                                 var canDraw = false,
+                                    allowNewImg = true,
                                     img = '',
                                     h   = $(document).height(),
                                     w   = $(document).width(),
@@ -469,6 +470,7 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
 
                                 $(document).on('click', '#feedback-highlighter-next', function() {
                                     canDraw = false;
+                                    allowNewImg = true;
                                     $('#feedback-canvas').css('cursor', 'default');
                                     var sy = $(document).scrollTop(),
                                         dh = $(window).height();
@@ -479,6 +481,9 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
                                     }
                                     html2canvas($('body'), {
                                         onrendered: function(canvas) {
+                                            if (!allowNewImg) {
+                                                return
+                                            }
                                             if (!settings.screenshotStroke) {
                                                 redraw(ctx);
                                             }
@@ -502,6 +507,7 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
                                                 close();
                                                 _canvas.remove();
                                             }
+                                            allowNewImg = false;
                                         },
                                         proxy: settings.proxy,
                                         letterRendering: settings.letterRendering,
